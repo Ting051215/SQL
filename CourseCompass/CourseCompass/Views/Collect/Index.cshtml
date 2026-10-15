@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CourseCompass.Models.Collect>
+
+@{
+    ViewBag.Title = "我的收藏清單";
+}
+
+<h2>⭐ 我的收藏清單</h2>
+<hr />
+
+<table class="table table-bordered table-striped table-hover">
+    <thead style="background-color: #f0ad4e; color: white;">
+        <tr>
+            <th>課程代碼</th>
+            <th>收藏時間</th>
+            <th>我的備註</th>
+            <th width="160">功能操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.courseID</td>
+                    <td>@item.collectTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.note))
+                        {
+                            <span class="text-muted" style="font-style: italic;">(點擊右側按鈕新增備註...)</span>
+                        }
+                        else
+                        {
+                            @item.note
+                        }
+                    </td>
+                    <td style="white-space: nowrap; vertical-align: middle;">
+                        <div style="display: flex; gap: 5px; align-items: center;">
+                            <a href="@Url.Action("Edit", "Collect", new { courseID = item.courseID })" class="btn btn-primary btn-xs">修改備註</a>
+
+                            <a href="@Url.Action("Delete", "Collect", new { courseID = item.courseID })" class="btn btn-danger btn-xs">移除收藏</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted" style="padding: 30px;">
+                    目前還沒有收藏任何課程。<br /><br />
+                    <a href="@Url.Action("Index", "Course")" class="btn btn-primary btn-sm">去看看有哪些課程</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

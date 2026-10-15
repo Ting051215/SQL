@@ -1,0 +1,48 @@
+﻿@model CourseCompass.Models.Collect
+
+@{
+    ViewBag.Title = "修改收藏備註";
+}
+
+<div class="container mt-4">
+    <h2>✏️ 修改收藏備註</h2>
+    <hr />
+
+    <div class="well shadow-sm" style="background-color: #ffffff; padding: 20px;">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="courseID" value="@Model.courseID" />
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="font-weight: bold; text-align: left;">課程代碼：</label>
+                    <div class="col-md-10" style="padding-top: 7px; font-size: 16px;">
+                        @Model.courseID
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="font-weight: bold; text-align: left;">收藏時間：</label>
+                    <div class="col-md-10" style="padding-top: 7px; color: #6c757d;">
+                        @Model.collectTime.ToString("yyyy-MM-dd HH:mm")
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="font-weight: bold; text-align: left;">編輯備註內容：</label>
+                    <div class="col-md-10">
+                        <textarea name="note" class="form-control" rows="4" style="max-width: 500px;">@Model.note</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-top: 15px;">
+                        <button type="submit" class="btn btn-primary">儲存修改</button>
+                        <a href="@Url.Action("Index", "Collect")" class="btn btn-default" style="margin-left: 10px;">取消變更</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

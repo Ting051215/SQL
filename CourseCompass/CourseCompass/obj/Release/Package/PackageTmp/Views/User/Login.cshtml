@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "登入";
+}
+
+<h2>使用者登入</h2>
+
+<form method="post">
+
+    <div>
+        帳號：
+        <input type="text" name="account" />
+    </div>
+
+    <br />
+
+    <div>
+        密碼：
+        <input type="password" name="password" />
+    </div>
+
+    <br />
+
+    <input type="submit" value="登入" />
+
+</form>
+
+<br />
+
+@Html.ActionLink("註冊帳號", "Register")
+
+<h3 style="color:red">
+    @ViewBag.msg
+</h3>

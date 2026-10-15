@@ -1,0 +1,84 @@
+﻿@model CourseCompass.Models.Evaluation
+
+@{
+    ViewBag.Title = "填寫課程評價";
+}
+
+<div class="container mt-4">
+    <h2>✍️ 填寫課程評價</h2>
+    <hr />
+
+    <div class="well shadow-sm" style="background-color: #ffffff;">
+        @using (Html.BeginForm("Create", "Evaluation", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="courseID" value="@ViewBag.CourseID" />
+
+            <div class="form-group">
+                <label class="control-label col-md-2" style="font-weight: bold;">綜合推薦度</label>
+                <div class="col-md-10">
+                    <select name="recommendations" class="form-control" style="max-width: 300px;">
+                        <option value="5">5 - 非常推薦 (神課必修)</option>
+                        <option value="4">4 - 推薦 (值得一修)</option>
+                        <option value="3" selected>3 - 普通 (中規中矩)</option>
+                        <option value="2">2 - 不推薦 (偏雷)</option>
+                        <option value="1">1 - 極不推薦 (快逃)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" style="font-weight: bold;">給分甜度</label>
+                <div class="col-md-10">
+                    <select name="sweetness" class="form-control" style="max-width: 300px;">
+                        <option value="5">5 - 超級甜 (爽拿高分)</option>
+                        <option value="4">4 - 微甜 (給分大方)</option>
+                        <option value="3" selected>3 - 普通 (一分耕耘一分收穫)</option>
+                        <option value="2">2 - 微硬 (給分嚴格)</option>
+                        <option value="1">1 - 超硬 (當人不手軟)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" style="font-weight: bold;">課程難度</label>
+                <div class="col-md-10">
+                    <select name="difficult" class="form-control" style="max-width: 300px;">
+                        <option value="5">5 - 非常困難 (需要大量腦力)</option>
+                        <option value="4">4 - 偏難 (具挑戰性)</option>
+                        <option value="3" selected>3 - 適中 (正常難度)</option>
+                        <option value="2">2 - 偏易 (輕鬆好上手)</option>
+                        <option value="1">1 - 非常簡單 (躺著過)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" style="font-weight: bold;">作業量</label>
+                <div class="col-md-10">
+                    <select name="workload" class="form-control" style="max-width: 300px;">
+                        <option value="5">5 - 爆肝重 (每週都有大量作業)</option>
+                        <option value="4">4 - 偏多 (稍微花時間)</option>
+                        <option value="3" selected>3 - 適中 (負擔合理)</option>
+                        <option value="2">2 - 偏少 (偶爾有小作業)</option>
+                        <option value="1">1 - 極少 (幾乎沒有作業)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" style="font-weight: bold;">修課心得 (自由填寫)</label>
+                <div class="col-md-10">
+                    <textarea name="comment" class="form-control" rows="5" placeholder="分享一下老師的上課方式、考試題型或任何給學弟妹的建議吧！" style="max-width: 500px;"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary">送出評價</button>
+                    <a href="@Url.Action("Detail", "Course", new { id = ViewBag.CourseID })" class="btn btn-default" style="margin-left: 10px;">取消並返回</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

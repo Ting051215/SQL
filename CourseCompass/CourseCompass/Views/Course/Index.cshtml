@@ -1,0 +1,61 @@
+﻿@model IEnumerable<CourseCompass.Models.Course>
+
+@{
+    ViewBag.Title = "課程列表";
+}
+
+<h2>選課指南針 - 課程總覽</h2>
+<hr />
+
+<div class="well shadow-sm" style="background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+    @using (Html.BeginForm("Search", "Course", FormMethod.Post, new { @class = "form-inline" }))
+    {
+        <div class="form-group">
+            <input type="text" name="keyword" class="form-control" placeholder="搜尋課名、老師或系所..." style="width: 300px; max-width: 100%;" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-left: 5px;">搜尋</button>
+        <a href="@Url.Action("Index", "Course")" class="btn btn-default" style="margin-left: 5px;">清除搜尋結果</a>
+    }
+</div>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead style="background-color: #343a40; color: white;">
+        <tr>
+            <th>課程代碼</th>
+            <th>課程名稱</th>
+            <th>授課教師</th>
+            <th>學分</th>
+            <th>開課系所</th>
+            <th width="220">功能操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.courseID</td>
+                    <td>@item.courseName</td>
+                    <td>@item.teacher</td>
+                    <td>@item.credits</td>
+                    <td>@item.department</td>
+                    <td style="white-space: nowrap; vertical-align: middle;">
+                        <div style="display: flex; gap: 5px; align-items: center;">
+                            <a href="@Url.Action("Detail", "Course", new { id = item.courseID })" class="btn btn-info btn-sm">詳細資訊</a>
+                            <a href="@Url.Action("Create", "Evaluation", new { courseID = item.courseID })" class="btn btn-success btn-sm">新增評論</a>
+
+                            <a href="@Url.Action("Add", "Collect", new { courseID = item.courseID })" class="btn btn-warning btn-sm">加入收藏</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center text-muted" style="padding: 20px;">找不到符合條件的課程。</td>
+            </tr>
+        }
+    </tbody>
+</table>
