@@ -1,0 +1,97 @@
+﻿@model CourseCompass.Models.Course
+
+@{
+    ViewBag.Title = "課程詳細資訊";
+    var evals = ViewBag.Evaluations as List<CourseCompass.Models.Evaluation>;
+    var avgs = ViewBag.Averages as CourseCompass.Services.CourseAverages;
+}
+
+<h2>📚 課程詳細資訊</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered shadow-sm" style="font-size:16px;">
+            <tr><th width="30%" class="active">課程代碼</th><td>@Model.courseID</td></tr>
+            <tr><th class="active">課程名稱</th><td>@Model.courseName</td></tr>
+            <tr><th class="active">授課教師</th><td>@Model.teacher</td></tr>
+            <tr><th class="active">學分</th><td>@Model.credits</td></tr>
+            <tr><th class="active">開課系所</th><td>@Model.department</td></tr>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-info shadow-sm">
+            <div class="panel-heading"><h3 class="panel-title fw-bold">📊 課程綜合評價指標</h3></div>
+            <div class="panel-body">
+                <ul class="list-group" style="margin-bottom: 0;">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        綜合推薦度
+                        <span class="badge" style="background-color: #0275d8; font-size: 14px;">★ @avgs.Recommend.ToString("0.0")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        給分甜度
+                        <span class="badge" style="background-color: #5cb85c; font-size: 14px;">🍯 @avgs.Sweetness.ToString("0.0")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        課程難度
+                        <span class="badge" style="background-color: #d9534f; font-size: 14px;">🔥 @avgs.Difficult.ToString("0.0")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        作業負擔
+                        <span class="badge" style="background-color: #f0ad4e; font-size: 14px;">📚 @avgs.Workload.ToString("0.0")</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 style="margin-top: 30px;">💬 同學心得與評分</h3>
+<table class="table table-hover table-bordered shadow-sm">
+    <thead style="background-color: #f8f9fa;">
+        <tr>
+            <th width="12%">推薦度</th>
+            <th width="12%">給分甜度</th>
+            <th width="12%">課程難度</th>
+            <th width="12%">作業量</th>
+            <th>質性評論心得</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (evals != null && evals.Any())
+        {
+            foreach (var e in evals)
+            {
+                <tr>
+                    <td><span style="color: #0275d8; font-weight: bold;">@e.recommendations</span> ★</td>
+                    <td>@e.sweetness / 5</td>
+                    <td>@e.difficult / 5</td>
+                    <td>@e.workload / 5</td>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(e.comment))
+                        {
+                            <span class="text-muted" style="font-style: italic;">(該名同學未留下文字心得)</span>
+                        }
+                        else
+                        {
+                            @e.comment
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted" style="padding: 20px;">
+                    目前這門課還沒有同學填寫評論，來當第一個吧！
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p style="margin-top: 25px;">
+    <a href="@Url.Action("Index", "Course")" class="btn btn-default">返回課程總覽</a>
+</p>

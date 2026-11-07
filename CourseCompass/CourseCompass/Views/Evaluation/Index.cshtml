@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CourseCompass.Models.Evaluation>
+
+@{
+    ViewBag.Title = "課程評論";
+}
+
+<div class="container" style="margin-top: 40px; max-width: 950px;">
+    <div class="panel panel-default shadow" style="border-radius: 10px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+
+        <div class="panel-heading" style="background-color: #d4edda; color: #155724; border-top-left-radius: 10px; border-top-right-radius: 10px; padding: 15px 20px; border-bottom: 2px solid #c3e6cb; display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="panel-title" style="font-weight: bold; font-size: 20px; margin: 0; display: inline-block;">
+                💬 課程評論與心得清單
+            </h3>
+            <a href="@Url.Action("Create", "Evaluation", new { courseID = ViewBag.CourseID })" class="btn btn-success btn-sm" style="font-weight: bold; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <i class="glyphicon glyphicon-plus"></i> 撰寫新評論
+            </a>
+        </div>
+
+        <div class="panel-body" style="padding: 25px;">
+
+            <div style="background-color: #f4fbf7; border-left: 5px solid #28a745; padding: 15px 20px; border-radius: 6px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h4 style="margin: 0; font-weight: bold; color: #212529; font-size: 16px;">📈 本課總體評分表現</h4>
+                    <p style="margin: 5px 0 0 0; color: #6c757d; font-size: 14px;">數據來自於全體修課同學的真實回饋統計</p>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 15px; font-weight: 600; color: #155724; margin-right: 8px;">平均推薦度</span>
+                    <span class="label label-success" style="font-size: 18px; padding: 6px 14px; border-radius: 20px; font-weight: bold; background-color: #28a745;">
+                        ★ @(ViewBag.avg != null ? Convert.ToDouble(ViewBag.avg).ToString("0.0") : "0.0")
+                    </span>
+                </div>
+            </div>
+
+            <div style="border-radius: 8px; overflow: hidden; border: 1px solid #dee2e6;">
+                <table class="table table-hover" style="margin-bottom: 0; font-size: 15px;">
+                    <thead style="background-color: #f8f9fa; color: #495057;">
+                        <tr>
+                            <th width="12%" style="border-bottom: 2px solid #dee2e6; padding: 12px;">推薦度</th>
+                            <th width="12%" style="border-bottom: 2px solid #dee2e6; padding: 12px;">給分甜度</th>
+                            <th width="12%" style="border-bottom: 2px solid #dee2e6; padding: 12px;">課程難度</th>
+                            <th width="12%" style="border-bottom: 2px solid #dee2e6; padding: 12px;">作業量</th>
+                            <th style="border-bottom: 2px solid #dee2e6; padding: 12px;">質性評論心得</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="vertical-align: middle; padding: 12px;">
+                                        <span style="color: #28a745; font-weight: bold; font-size: 16px;">@item.recommendations</span> ★
+                                    </td>
+                                    <td style="vertical-align: middle; padding: 12px; color: #495057;">@item.sweetness / 5</td>
+                                    <td style="vertical-align: middle; padding: 12px; color: #495057;">@item.difficult / 5</td>
+                                    <td style="vertical-align: middle; padding: 12px; color: #495057;">@item.workload / 5</td>
+                                    <td style="vertical-align: middle; padding: 12px; line-height: 1.6;">
+                                        @if (string.IsNullOrWhiteSpace(item.comment))
+                                        {
+                                            <span class="text-muted" style="font-style: italic; color: #adb5bd;">(該名同學未留下文字心得)</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #212529;">@item.comment</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted" style="padding: 40px 20px;">
+                                    <div style="font-size: 40px; margin-bottom: 10px; color: #e9ecef;">📝</div>
+                                    目前這門課還沒有任何同學發表評論。
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <a href="@Url.Action("Index", "Course")" class="btn btn-default" style="padding: 8px 20px; border-radius: 6px; color: #495057; font-weight: bold;">
+                    <i class="glyphicon glyphicon-chevron-left" style="font-size: 12px; margin-right: 5px;"></i> 返回課程總覽
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

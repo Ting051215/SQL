@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "加入我的收藏";
+}
+
+<div class="container mt-4">
+    <h2>⭐ 加入我的收藏</h2>
+    <hr />
+
+    <div class="well shadow-sm" style="background-color: #ffffff; padding: 20px;">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="courseID" value="@ViewBag.CourseID" />
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="font-weight: bold; text-align: left;">將收藏課程：</label>
+                    <div class="col-md-10" style="padding-top: 7px; font-size: 16px; font-weight: bold; color: #f0ad4e;">
+                        @ViewBag.CourseID
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" style="font-weight: bold; text-align: left;">自訂收藏備註：</label>
+                    <div class="col-md-10">
+                        <textarea name="note" class="form-control" rows="4" placeholder="可以輸入你想選這門課的原因、學分規劃或是備忘錄... (選填)" style="max-width: 500px;"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-top: 15px;">
+                        <button type="submit" class="btn btn-warning">確認收藏</button>
+                        <a href="@Url.Action("Index", "Course")" class="btn btn-default" style="margin-left: 10px;">取消</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

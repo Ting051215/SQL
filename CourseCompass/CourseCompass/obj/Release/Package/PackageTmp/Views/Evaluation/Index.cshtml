@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CourseCompass.Models.Evaluation>
+
+@{
+    ViewBag.Title = "課程評論";
+}
+
+<h2>課程評論</h2>
+
+<h3>
+    平均推薦度：
+
+    @ViewBag.avg
+</h3>
+
+<table border="1">
+
+    <tr>
+        <th>推薦度</th>
+        <th>甜度</th>
+        <th>難度</th>
+        <th>作業量</th>
+        <th>評論</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.recommendations</td>
+
+            <td>@item.sweetness</td>
+
+            <td>@item.difficult</td>
+
+            <td>@item.workload</td>
+
+            <td>@item.comment</td>
+
+        </tr>
+    }
+
+</table>
+
+<br />
+
+@Html.ActionLink(
+    "新增評論",
+    "Create")

@@ -1,0 +1,51 @@
+﻿@model CourseCompass.Models.User
+
+@{
+    ViewBag.Title = "註冊";
+}
+
+<h2>會員註冊</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        學號：
+        @Html.TextBoxFor(m => m.studentID)
+    </div>
+
+    <br />
+
+    <div>
+        年級：
+        @Html.TextBoxFor(m => m.grade)
+    </div>
+
+    <br />
+
+    <div>
+        帳號：
+        @Html.TextBoxFor(m => m.account)
+    </div>
+
+    <br />
+
+    <div>
+        密碼：
+        @Html.PasswordFor(m => m.password)
+    </div>
+
+    <br />
+
+    <div>
+        系所：
+        @Html.TextBoxFor(m => m.department)
+    </div>
+
+    <br />
+
+    <input type="submit" value="註冊" />
+}
+
+<h3 style="color:red">
+    @ViewBag.msg
+</h3>

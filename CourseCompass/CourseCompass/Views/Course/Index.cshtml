@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CourseCompass.Models.Course>
+
+@{
+    ViewBag.Title = "課程列表";
+}
+
+<div class="container" style="margin-top: 40px; max-width: 1100px;">
+    <div class="panel panel-default shadow" style="border-radius: 10px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+
+        <div class="panel-heading" style="background-color: #e3f2fd; color: #0d47a1; border-top-left-radius: 10px; border-top-right-radius: 10px; padding: 15px 20px; border-bottom: 2px solid #bbdefb;">
+            <h3 class="panel-title" style="font-weight: bold; font-size: 20px; margin: 0;">
+                🧭 選課指南針 - 課程總覽
+            </h3>
+        </div>
+
+        <div class="panel-body" style="padding: 25px;">
+
+            <div style="background-color: #f8f9fa; padding: 18px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #e9ecef;">
+                @using (Html.BeginForm("Search", "Course", FormMethod.Post, new { @class = "form-inline", style = "margin: 0;" }))
+                {
+                    <div class="form-group" style="position: relative;">
+                        <input type="text" name="keyword" class="form-control" placeholder="🔍 搜尋課名、老師或系所..." style="width: 320px; max-width: 100%; border-radius: 20px; padding-left: 15px; border: 1px solid #ced4da;" />
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10px; border-radius: 20px; padding: 6px 20px; font-weight: bold; letter-spacing: 1px;">
+                        搜尋
+                    </button>
+                    <a href="@Url.Action("Index", "Course")" class="btn btn-default" style="margin-left: 5px; border-radius: 20px; padding: 6px 15px; color: #6c757d;">
+                        清除條件
+                    </a>
+                }
+            </div>
+
+            <table class="table table-hover" style="margin-bottom: 0; font-size: 15px;">
+                <thead style="background-color: #ffffff; color: #495057;">
+                    <tr>
+                        <th style="border-bottom: 2px solid #dee2e6; padding-bottom: 12px;">課程代碼</th>
+                        <th style="border-bottom: 2px solid #dee2e6; padding-bottom: 12px;">課程名稱</th>
+                        <th style="border-bottom: 2px solid #dee2e6; padding-bottom: 12px;">授課教師</th>
+                        <th style="border-bottom: 2px solid #dee2e6; padding-bottom: 12px;">學分</th>
+                        <th style="border-bottom: 2px solid #dee2e6; padding-bottom: 12px;">開課系所</th>
+                        <th width="260" style="border-bottom: 2px solid #dee2e6; padding-bottom: 12px; text-align: center;">功能操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="vertical-align: middle; padding: 12px 8px;">
+                                    <span class="label label-primary" style="font-size: 14px; padding: 5px 10px; border-radius: 6px;">@item.courseID</span>
+                                </td>
+                                <td style="vertical-align: middle; padding: 12px 8px; font-weight: bold; color: #212529;">
+                                    @item.courseName
+                                </td>
+                                <td style="vertical-align: middle; padding: 12px 8px; color: #495057;">@item.teacher</td>
+                                <td style="vertical-align: middle; padding: 12px 8px; color: #6c757d;">@item.credits</td>
+                                <td style="vertical-align: middle; padding: 12px 8px; color: #6c757d;">@item.department</td>
+                                <td style="vertical-align: middle; padding: 12px 8px;">
+                                    <div style="display: flex; gap: 6px; align-items: center; justify-content: center;">
+                                        <a href="@Url.Action("Detail", "Course", new { id = item.courseID })" class="btn btn-info btn-sm" style="border-radius: 6px; font-weight: bold;">詳細資訊</a>
+                                        <a href="@Url.Action("Create", "Evaluation", new { courseID = item.courseID })" class="btn btn-success btn-sm" style="border-radius: 6px; font-weight: bold;">新增評論</a>
+                                        <a href="@Url.Action("Add", "Collect", new { courseID = item.courseID })" class="btn btn-warning btn-sm" style="border-radius: 6px; font-weight: bold; color: #856404;">加入收藏</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted" style="padding: 60px 20px;">
+                                <div style="font-size: 45px; margin-bottom: 15px; color: #dee2e6;">🔍</div>
+                                <h4 style="color: #6c757d; font-weight: bold;">找不到符合條件的課程</h4>
+                                <p style="margin-bottom: 0; font-size: 15px;">請嘗試更換關鍵字，或點擊上方「清除條件」返回總覽。</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
